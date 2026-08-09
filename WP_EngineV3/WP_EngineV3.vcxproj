@@ -128,10 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\WP_Graphics.cpp" />
     <ClCompile Include="..\src\WP_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\WP_Graphics.h" />
     <ClInclude Include="..\Include\WP_Window.h" />
+    <ClInclude Include="..\src\WP_Math.h" />
+    <ClInclude Include="..\src\WP_Vec.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

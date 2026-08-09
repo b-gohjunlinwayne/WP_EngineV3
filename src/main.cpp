@@ -1,7 +1,8 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
-
+#include <WP_Window.h>
+#include <WP_Graphics.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -14,8 +15,48 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 }
 
+int test = 1;
+
+void UpdateLoop()
+{
+    std::cout << "Update1" << std::endl;
+}
+
+void UpdateLoop2()
+{
+    std::cout << "Update2" << std::endl;
+}
+
 int main()
 {
+    WP_Graphics::InitialiseGLFW();
+
+    {
+        std::unique_ptr<WP_Window> mainWindow = std::make_unique<WP_Window>(
+            800, 600,
+            "mainWindow",
+            UpdateLoop
+        );
+
+        std::unique_ptr <WP_Window> subWindow = std::make_unique<WP_Window>(
+            800, 600,
+            "subWindow",
+            UpdateLoop2
+        );
+
+        while (mainWindow->RunWindow())
+        {
+            if (subWindow && !subWindow->RunWindow())
+            {
+                subWindow.reset();
+            }
+        }
+    }
+
+
+    WP_Graphics::Cleanup();
+
+    /*
     if (!glfwInit())
     {
         std::cerr << "GLFW init failed\n";
@@ -64,6 +105,6 @@ int main()
     }
 
     glfwDestroyWindow(window);
-    glfwTerminate();
+    glfwTerminate();*/
     return 0;
 }
