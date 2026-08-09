@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glew-2.3.1\build\vc2022\CMakeFiles\da7984d274bf18218e18cf5296e926b9\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glew-2.3.1\build\cmake\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glew-2.3.1\build\vc2022\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{FF7E1527-E05C-3023-AA94-9F22C67A502C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glfw-3.5.1\Build\CMakeFiles\db118e6e1b6e63842b234c6e40241290\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0D92BE98-901C-314A-B461-8618C9E4624F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

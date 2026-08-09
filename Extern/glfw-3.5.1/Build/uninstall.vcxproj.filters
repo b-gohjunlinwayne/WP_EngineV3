@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glfw-3.5.1\Build\CMakeFiles\d0a3413d3b48459154008a1dc5c0f61c\uninstall.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glfw-3.5.1\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="D:\PersonalProject\WP_Engine\WP_EngineV3\Extern\glfw-3.5.1\Build\CMakeFiles\uninstall" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{0D92BE98-901C-314A-B461-8618C9E4624F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

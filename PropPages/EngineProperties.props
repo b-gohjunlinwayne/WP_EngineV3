@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ImportGroup Label="PropertySheets" />
+	<PropertyGroup>
+		
+		<GLEWRoot>$(SolutionDir)Extern\glew-2.3.1</GLEWRoot>
+
+		<GLEWLibPath>$(GLEWRoot)\build\vc2022\lib\$(Configuration)</GLEWLibPath>
+		<GLEWIncludePath>$(GLEWRoot)\include</GLEWIncludePath>
+
+		<GLEWLibrary Condition="'$(Configuration)' == 'Debug'">glew32d.lib</GLEWLibrary>
+		<GLEWLibrary Condition="'$(Configuration)' == 'Release'">glew32.lib</GLEWLibrary>
+
+		<GLEWDll Condition="'$(Configuration)' == 'Debug'">glew32d.dll</GLEWDll>
+		<GLEWDll Condition="'$(Configuration)' == 'Release'">glew32.dll</GLEWDll>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<GLFWRoot>$(SolutionDir)\Extern\glfw-3.5.1</GLFWRoot>
+
+		<GLFWLibPath>$(GLFWRoot)\Build\src\$(Configuration)</GLFWLibPath>
+		<GLFWIncludePath>$(GLFWRoot)\include</GLFWIncludePath>
+		
+	</PropertyGroup>
+
+	<PropertyGroup Label="UserMacros" />
+	<PropertyGroup>
+		<IncludePath>$(IncludePath)</IncludePath>
+		<ReferencePath>$(ReferencePath)</ReferencePath>
+	</PropertyGroup>
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<LanguageStandard>stdcpp23</LanguageStandard>
+			<AdditionalIncludeDirectories>
+				$(SolutionDir)/include;
+				$(GLEWIncludePath);
+				$(GLFWIncludePath);
+				$(ExternalIncludePath)
+			</AdditionalIncludeDirectories>
+		</ClCompile>
+		<Link>
+			<AdditionalDependencies>
+				glfw3.lib;
+				opengl32.lib;
+				$(GLEWLibrary);
+				%(AdditionalDependencies)
+			</AdditionalDependencies>
+			<AdditionalLibraryDirectories>
+				$(GLFWLibPath);
+				$(GLEWLibPath);
+				%(AdditionalLibraryDirectories)
+			</AdditionalLibraryDirectories>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup />
+	<!-- Copy the correct DLLs next to the executable -->
+	<ItemGroup>
+		<None Include="$(GLEWRoot)\build\vc2022\bin\$(Configuration)\$(GLEWDll)">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>

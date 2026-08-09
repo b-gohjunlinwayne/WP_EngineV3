@@ -1,0 +1,11 @@
+{
+	"InstallScripts" : 
+	[
+		"D:/PersonalProject/WP_Engine/WP_EngineV3/Extern/glfw-3.5.1/Build/cmake_install.cmake",
+		"D:/PersonalProject/WP_Engine/WP_EngineV3/Extern/glfw-3.5.1/Build/src/cmake_install.cmake",
+		"D:/PersonalProject/WP_Engine/WP_EngineV3/Extern/glfw-3.5.1/Build/examples/cmake_install.cmake",
+		"D:/PersonalProject/WP_Engine/WP_EngineV3/Extern/glfw-3.5.1/Build/tests/cmake_install.cmake",
+		"D:/PersonalProject/WP_Engine/WP_EngineV3/Extern/glfw-3.5.1/Build/docs/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
