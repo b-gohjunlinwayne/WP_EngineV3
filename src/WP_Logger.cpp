@@ -9,11 +9,22 @@ WP_LogManager& WP_LogManager::GetInstance()
 
 void WP_LogManager::Enqueue(WP_LogMessage _message)
 {
-	std::lock_guard lock(m_queueMutex);
-	m_logQueue.push(std::move(_message));
-
+	{
+		std::lock_guard lock(m_queueMutex);
+		m_logQueue.push(std::move(_message));
+	}
 	//notify condition variable for runlogqueue to run
 	m_conditionVariable.notify_one();
+}
+
+void WP_LogManager::Stop()
+{
+	{
+		std::lock_guard<std::mutex> lock(m_queueMutex);
+		m_isStopping = true;
+	}
+	m_conditionVariable.notify_one();
+	m_logThread.join();
 }
 
 void WP_LogManager::RunLogQueue()

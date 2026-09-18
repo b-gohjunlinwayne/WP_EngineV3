@@ -2,7 +2,7 @@
 #
 struct WP_Shader
 {
-	unsigned int shaderProgramID;
+	unsigned int p_shaderProgramID;
 
 	WP_Shader(unsigned int _shaderProgramID);
 

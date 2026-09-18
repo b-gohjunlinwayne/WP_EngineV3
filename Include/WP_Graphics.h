@@ -4,7 +4,6 @@ class WP_Graphics
 {
 private:
 	static bool s_glewInit;
-	static WP_ShaderManager s_shaderManager;
 
 public:
 
@@ -16,9 +15,9 @@ public:
 	static bool GetIsGlewInit();
 
 	//shader Manager
-	static void LoadShader(const std::string& shaderName,
-		const std::string& vertexPath, const std::string& fragmentPath);
-	static std::optional<WP_Shader> GetShader(const std::string& shaderName);
+	static void LoadShader(const std::string& _shaderName,
+		const std::string& _vertexPath, const std::string& _fragmentPath);
+	static std::optional<WP_Shader> GetShader(const std::string& _shaderName);
 
 	//Cleanup
 	static void Cleanup();

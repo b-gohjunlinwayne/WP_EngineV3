@@ -1,3 +1,8 @@
+/*
+    Logging system for application
+	Run logging in a separate thread to avoid blocking the main thread for expensive io operations
+*/
+
 #pragma once
 #include <string>
 #include <condition_variable>
@@ -18,8 +23,7 @@ enum class WP_LogLevel
 struct WP_LogMessage
 {
     WP_LogMessage(WP_LogLevel _level, std::string _text)
-		: p_level(_level), p_text(std::move(_text)) {
-	}
+		: p_level(_level), p_text(std::move(_text)) {}
 
     std::string p_text;
     WP_LogLevel p_level;
@@ -33,12 +37,11 @@ public:
 
 	WP_LogManager() :
 		m_logThread(&WP_LogManager::RunLogQueue, this), 
-		m_isStopping(false)
-	{
-
-	}
+		m_isStopping(false){}
 
     void Enqueue(WP_LogMessage _message);
+
+    void Stop();
 private:
     void RunLogQueue();
 

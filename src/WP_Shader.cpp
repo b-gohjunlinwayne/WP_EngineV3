@@ -3,10 +3,10 @@
 
 WP_Shader::WP_Shader(unsigned int _shaderProgramID)
 {
-	shaderProgramID = _shaderProgramID;
+	p_shaderProgramID = _shaderProgramID;
 }
 
 void WP_Shader::Use() const
 {
-	glUseProgram(shaderProgramID);
+	glUseProgram(p_shaderProgramID);
 }

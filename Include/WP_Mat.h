@@ -5,60 +5,60 @@
 template <typename T , size_t Rows, size_t Cols >
 struct WP_Mat
 {
-    T data[Rows][Cols]{};
+    T p_data[Rows][Cols]{};
 
     static WP_Mat Identity()
         requires (Rows == Cols);
     template <typename... Args>
-    static WP_Mat<T, Rows, Cols> Translate(Args... values)
+    static WP_Mat<T, Rows, Cols> Translate(Args... _values)
         requires (Rows == Cols && sizeof...(Args) == Rows - 1);
 
-    static WP_Mat Scale(T value)
+    static WP_Mat Scale(T _value)
         requires (Rows == Cols);
     template <typename... Args>
-    static WP_Mat Scale(Args... values)
+    static WP_Mat Scale(Args... _values)
         requires (Rows == Cols && sizeof...(Args) == Rows - 1);
 
-    static WP_Mat Rotation2D(T radians)
+    static WP_Mat Rotation2D(T _radians)
         requires (Rows == 3 && Cols == 3);
-    static WP_Mat Rotation3DX(T radians)
+    static WP_Mat Rotation3DX(T _radians)
         requires (Rows == 4 && Cols == 4);
-    static WP_Mat Rotation3DY(T radians)
+    static WP_Mat Rotation3DY(T _radians)
         requires (Rows == 4 && Cols == 4);
-    static WP_Mat Rotation3DZ(T radians)
+    static WP_Mat Rotation3DZ(T _radians)
         requires (Rows == 4 && Cols == 4);
 
-    static WP_Mat Translate(const WP_Vec<T, Rows - 1> translate)
+    static WP_Mat Translate(const WP_Vec<T, Rows - 1> _translate)
         requires (Rows == Cols);
 
 
-	T& operator()(size_t row, size_t col);
-	const T& operator()(size_t row, size_t col) const;
+	T& operator()(size_t _row, size_t _col);
+	const T& operator()(size_t _row, size_t _col) const;
 
     //compiler optimise loops so we use default instead of writing own
-    WP_Mat& operator=(const WP_Mat& other) = default;
+    WP_Mat& operator=(const WP_Mat& _other) = default;
 
     // Matrix operations
-    WP_Mat operator+(const WP_Mat& other) const;
-    WP_Mat& operator+=(const WP_Mat& other);
-    WP_Mat operator-(const WP_Mat& other) const;
-    WP_Mat& operator-=(const WP_Mat& other);
+    WP_Mat operator+(const WP_Mat& _other) const;
+    WP_Mat& operator+=(const WP_Mat& _other);
+    WP_Mat operator-(const WP_Mat& _other) const;
+    WP_Mat& operator-=(const WP_Mat& _other);
     template <size_t OtherCols>
-    WP_Mat<T, Rows, OtherCols> operator*(const WP_Mat<T, Cols, OtherCols>& other) const;
-    WP_Mat& operator*=(const WP_Mat<T, Cols, Cols>& other);
+    WP_Mat<T, Rows, OtherCols> operator*(const WP_Mat<T, Cols, OtherCols>& _other) const;
+    WP_Mat& operator*=(const WP_Mat<T, Cols, Cols>& _other);
 
     //Affine Transformation
-    WP_Vec<T, Rows> operator*(const WP_Vec <T, Rows>& other) const;
-    WP_Vec<T, 2> TransformPoint(const WP_Vec<T, 2>& points) const
+    WP_Vec<T, Rows> operator*(const WP_Vec <T, Rows>& _other) const;
+    WP_Vec<T, 2> TransformPoint(const WP_Vec<T, 2>& _points) const
         requires (Rows == 3 && Cols == 3);
-    WP_Vec<T, 3> TransformPoint(const WP_Vec<T, 3>& points) const
+    WP_Vec<T, 3> TransformPoint(const WP_Vec<T, 3>& _points) const
         requires (Rows == 4 && Cols == 4);
 
     //Scalar
-    WP_Mat operator*(T scalar) const;
-    WP_Mat& operator*=(T scalar);
-    WP_Mat operator/(T scalar) const;
-    WP_Mat& operator/=(T scalar);
+    WP_Mat operator*(T _scalar) const;
+    WP_Mat& operator*=(T _scalar);
+    WP_Mat operator/(T _scalar) const;
+    WP_Mat& operator/=(T _scalar);
 
     WP_Mat<T, Cols, Rows> Transposed() const;
 };

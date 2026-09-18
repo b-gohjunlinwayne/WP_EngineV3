@@ -8,6 +8,9 @@ class WP_ShaderManager
 	std::unordered_map<std::string, WP_Shader> m_shaderDictionary;
 
 public:
+
+	static WP_ShaderManager& GetInstance();
+
 	void LoadShader(const std::string& shaderName, 
 		const std::string& vertexPath, 
 		const std::string& fragmentPath);

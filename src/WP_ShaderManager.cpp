@@ -5,24 +5,30 @@
 #include <string>
 #include <WP_Logger.h>
 
-void WP_ShaderManager::LoadShader(const
-	const std::string& shaderName,
-	const std::string& vertexPath,
-	const std::string& fragmentPath)
+WP_ShaderManager& WP_ShaderManager::GetInstance()
 {
-	WP_Logger() << "LOADING::SHADER : " << shaderName;
+	static WP_ShaderManager instance;
+	return instance;
+}
+
+void WP_ShaderManager::LoadShader(const
+	const std::string& _shaderName,
+	const std::string& _vertexPath,
+	const std::string& _fragmentPath)
+{
+	WP_Logger() << "LOADING::SHADER : " << _shaderName;
 
 	unsigned int newShaderProgramID = glCreateProgram();
 	WP_Shader newShaderProgram = WP_Shader(newShaderProgramID);
 
 	{
-		std::ifstream file(vertexPath);
+		std::ifstream file(_vertexPath);
 		if (!file.is_open())
 		{
 			WP_Logger(WP_LogLevel::Error) <<
-				"Vertex Path Invalid:" << shaderName;
+				"Vertex Path Invalid:" << _shaderName;
 			WP_Logger(WP_LogLevel::Error) << 
-				"Path : " << vertexPath;
+				"Path : " << _vertexPath;
 		}
 
 		std::string shaderSource;
@@ -52,15 +58,15 @@ void WP_ShaderManager::LoadShader(const
 				<< infoLog;
 		}
 
-		glAttachShader(newShaderProgram.shaderProgramID, vertexShader);
+		glAttachShader(newShaderProgram.p_shaderProgramID, vertexShader);
 	}
 
 	{
-		std::ifstream file(fragmentPath);
+		std::ifstream file(_fragmentPath);
 		if (!file.is_open())
 		{
-			WP_Logger(WP_LogLevel::Error)  << "Fragment Path Invalid:" << shaderName;
-			WP_Logger(WP_LogLevel::Error)  << "Path : " + fragmentPath;
+			WP_Logger(WP_LogLevel::Error)  << "Fragment Path Invalid:" << _shaderName;
+			WP_Logger(WP_LogLevel::Error)  << "Path : " + _fragmentPath;
 		}
 
 		std::string shaderSource;
@@ -90,19 +96,19 @@ void WP_ShaderManager::LoadShader(const
 				<< infoLog;
 		}
 
-		glAttachShader(newShaderProgram.shaderProgramID, fragmentShader);
+		glAttachShader(newShaderProgram.p_shaderProgramID, fragmentShader);
 	}
 
-	glLinkProgram(newShaderProgram.shaderProgramID);
-	glUseProgram(newShaderProgram.shaderProgramID);
+	glLinkProgram(newShaderProgram.p_shaderProgramID);
+	glUseProgram(newShaderProgram.p_shaderProgramID);
 
 	//add new shader program to dictionary
-	m_shaderDictionary.emplace(shaderName, newShaderProgram);
+	m_shaderDictionary.emplace(_shaderName, newShaderProgram);
 }
 
-std::optional<WP_Shader> WP_ShaderManager::GetShader(const std::string& shaderName) const
+std::optional<WP_Shader> WP_ShaderManager::GetShader(const std::string& _shaderName) const
 {
-	auto searchResult = m_shaderDictionary.find(shaderName);
+	auto searchResult = m_shaderDictionary.find(_shaderName);
 	if (searchResult != m_shaderDictionary.end())
 	{
 		return searchResult->second;
@@ -114,6 +120,6 @@ void WP_ShaderManager::CleanUp()
 {
 	for (auto i : m_shaderDictionary)
 	{
-		glDeleteProgram(i.second.shaderProgramID);
+		glDeleteProgram(i.second.p_shaderProgramID);
 	}
 }

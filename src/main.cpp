@@ -103,6 +103,8 @@ int main()
 
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
+
+        WP_LogManager::GetInstance().Stop();
     }
     return 0;
 }

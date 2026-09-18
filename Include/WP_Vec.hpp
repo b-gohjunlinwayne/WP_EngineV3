@@ -3,13 +3,13 @@
 #include <math.h>
 #include <array>
 
-template <typename Derived, typename T, size_t elements>
+template <typename Derived, typename T, size_t Elements>
 template <typename... Args>
-WP_VecBase<Derived, T,elements>::WP_VecBase(Args... values)
-	requires (sizeof...(Args) <= elements) 
+WP_VecBase<Derived, T, Elements>::WP_VecBase(Args... _values)
+	requires (sizeof...(Args) <= Elements)
 {
 	std::array<T, sizeof...(Args)> currentValues{
-			static_cast<T>(values)...
+			static_cast<T>(_values)...
 	};
 
 	for (int i = 0; i < sizeof...(Args); ++i)
@@ -18,149 +18,149 @@ WP_VecBase<Derived, T,elements>::WP_VecBase(Args... values)
 	}
 }
 
-template <typename Derived, typename T, size_t elements>
-T& WP_VecBase<Derived, T,elements>::operator[](size_t index)
+template <typename Derived, typename T, size_t Elements>
+T& WP_VecBase<Derived, T, Elements>::operator[](size_t _index)
 {
-	return this-> data[index];
+	return this->p_data[_index];
 }
 
-template <typename Derived, typename T, size_t elements>
-const T& WP_VecBase<Derived,T, elements>::operator[](size_t index) const
+template <typename Derived, typename T, size_t Elements>
+const T& WP_VecBase<Derived,T, Elements>::operator[](size_t _index) const
 {
-	return this-> data[index];
+	return this->p_data[_index];
 }
 
-template <typename Derived, typename T, size_t elements>
-Derived& WP_VecBase<Derived,T,elements>::operator+=(const Derived& other)
+template <typename Derived, typename T, size_t Elements>
+Derived& WP_VecBase<Derived,T, Elements>::operator+=(const Derived& _other)
 {
-	for (int i = 0; i < elements;++i) {
-		(*this)[i] += other[i];
+	for (int i = 0; i < Elements;++i) {
+		(*this)[i] += _other[i];
 	}
 	return static_cast<Derived&>(*this);;
 }
 
-template <typename Derived, typename T, size_t elements>
-Derived WP_VecBase<Derived,T,elements>::operator+(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+Derived WP_VecBase<Derived,T,Elements>::operator+(const Derived& _other) const
 {
 	Derived returnValue = static_cast<const Derived&>(*this);
-	returnValue += other;
+	returnValue += _other;
 	return returnValue;
 }
 
-template <typename Derived,typename T, size_t elements>
-Derived& WP_VecBase<Derived, T, elements>::operator-= (const Derived& other)
+template <typename Derived,typename T, size_t Elements>
+Derived& WP_VecBase<Derived, T, Elements>::operator-= (const Derived& _other)
 {
-	for (int i = 0; i < elements;++i) {
-		(*this)[i] -= other[i];
+	for (int i = 0; i < Elements;++i) {
+		(*this)[i] -= _other[i];
 	}
 	return static_cast<Derived&>(*this);;
 }
-template <typename Derived, typename T, size_t elements>
-Derived WP_VecBase<Derived, T, elements>::operator-(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+Derived WP_VecBase<Derived, T, Elements>::operator-(const Derived& _other) const
 {
 	Derived returnValue = static_cast<const Derived&>(*this);
-	returnValue -= other;
+	returnValue -= _other;
 	return returnValue;
 }
 
-template <typename Derived, typename T, size_t elements>
+template <typename Derived, typename T, size_t Elements>
 template <typename Scalar>
-Derived& WP_VecBase<Derived, T, elements>::operator/=(const Scalar& other)
+Derived& WP_VecBase<Derived, T, Elements>::operator/=(const Scalar& _other)
 {
-	for (int i = 0; i < elements;++i) {
-		(*this)[i] /= other;
+	for (int i = 0; i < Elements;++i) {
+		(*this)[i] /= _other;
 	}
 	return static_cast<Derived&>(*this);
 }
-template <typename Derived, typename T, size_t elements>
+template <typename Derived, typename T, size_t Elements>
 template <typename Scalar>
-Derived WP_VecBase<Derived, T, elements>::operator/(const Scalar& other) const
+Derived WP_VecBase<Derived, T, Elements>::operator/(const Scalar& _other) const
 {
 	Derived returnValue = static_cast<const Derived&>(*this);
-	returnValue /= other;
+	returnValue /= _other;
 	return returnValue;
 }
-template <typename Derived, typename T, size_t elements>
+template <typename Derived, typename T, size_t Elements>
 template <typename Scalar>
-Derived& WP_VecBase<Derived, T, elements>::operator*=(const Scalar& other)
+Derived& WP_VecBase<Derived, T, Elements>::operator*=(const Scalar& _other)
 {
-	for (int i = 0; i < elements;++i) {
-		(*this)[i] *= other;
+	for (int i = 0; i < Elements;++i) {
+		(*this)[i] *= _other;
 	}
 	return static_cast<Derived&>(*this);
 }
-template <typename Derived, typename T, size_t elements>
+template <typename Derived, typename T, size_t Elements>
 template <typename Scalar>
-Derived WP_VecBase<Derived, T, elements>::operator*(const Scalar& other) const
+Derived WP_VecBase<Derived, T, Elements>::operator*(const Scalar& _other) const
 {
 	Derived returnValue = static_cast<const Derived&>(*this);
-	returnValue *= other;
+	returnValue *= _other;
 	return returnValue;
 }
-template <typename Derived, typename T, size_t elements>
-bool WP_VecBase<Derived, T, elements>::operator==(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+bool WP_VecBase<Derived, T, Elements>::operator==(const Derived& _other) const
 {
-	for (int i = 0; i < elements;++i) {
-		if ((*this)[i] != other[i])
+	for (int i = 0; i < Elements;++i) {
+		if ((*this)[i] != _other[i])
 			return false;
 	}
 	return true;
 }
-template <typename Derived, typename T, size_t elements>
-bool WP_VecBase<Derived, T, elements>::operator!=(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+bool WP_VecBase<Derived, T, Elements>::operator!=(const Derived&_other) const
 {
-	return !(*this == other);
+	return !(*this ==_other);
 }
 
-template <typename Derived, typename T, size_t elements>
-T WP_VecBase<Derived, T, elements>::SqDistance(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+T WP_VecBase<Derived, T, Elements>::SqDistance(const Derived& _other) const
 {
 	T totalValue = T(0);
-	for (int i = 0; i < elements;++i)
+	for (int i = 0; i < Elements;++i)
 	{
-		T difference = other.data[i] - this->data[i];
+		T difference = _other.data[i] - this->data[i];
 		totalValue += difference * difference;
 	}
 	return totalValue;
 }
 
-template <typename Derived, typename T, size_t elements>
-T WP_VecBase<Derived, T, elements>::Distance(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+T WP_VecBase<Derived, T, Elements>::Distance(const Derived& _other) const
 	requires std::floating_point<T>
 {
-	return std::sqrt(this->SqDistance(other));
+	return std::sqrt(this->SqDistance(_other));
 }
 
-template <typename Derived, typename T, size_t elements>
-T WP_VecBase<Derived, T, elements>::DotProd(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+T WP_VecBase<Derived, T, Elements>::DotProd(const Derived& _other) const
 {
 	T result = T(0);
-	for (size_t i = 0; i < elements; ++i)
+	for (size_t i = 0; i < Elements; ++i)
 	{
-		result += (*this)[i] * other[i];
+		result += (*this)[i] * _other[i];
 	}
 	return result;
 }
 
-template <typename Derived, typename T, size_t elements>
-T WP_VecBase<Derived, T, elements>::SqMagnitude() const
+template <typename Derived, typename T, size_t Elements>
+T WP_VecBase<Derived, T, Elements>::SqMagnitude() const
 {
 	T totalValue = T(0);
-	for (int i = 0; i < elements;++i)
+	for (int i = 0; i < Elements;++i)
 	{
 		totalValue += (*this)[i] * (*this)[i];
 	}
 	return totalValue;
 }
-template <typename Derived, typename T, size_t elements>
-T WP_VecBase<Derived, T, elements>::Magnitude() const
+template <typename Derived, typename T, size_t Elements>
+T WP_VecBase<Derived, T, Elements>::Magnitude() const
 	requires std::floating_point<T>
 {
 	return std::sqrt(this->SqMagnitude());
 }
 
-template <typename Derived, typename T, size_t elements>
-Derived WP_VecBase<Derived, T, elements>::GetNormalized() const
+template <typename Derived, typename T, size_t Elements>
+Derived WP_VecBase<Derived, T, Elements>::GetNormalized() const
 	requires std::floating_point<T>
 {
 	T magnitude = this->SqMagnitude();
@@ -176,10 +176,10 @@ Derived WP_VecBase<Derived, T, elements>::GetNormalized() const
 	return returnValue;
 }
 
-template <typename Derived, typename T, size_t elements>
-Derived WP_VecBase<Derived, T, elements>::Project(const Derived& other) const
+template <typename Derived, typename T, size_t Elements>
+Derived WP_VecBase<Derived, T, Elements>::Project(const Derived& _other) const
 {
-	T magnitude = other.SqMagnitude();
+	T magnitude = _other.SqMagnitude();
 
 	//divide by 0 case
 	if (magnitude == T(0))
@@ -187,13 +187,13 @@ Derived WP_VecBase<Derived, T, elements>::Project(const Derived& other) const
 		return Derived();
 	}
 
-	return other * (DotProd(other) / magnitude);
+	return _other * (DotProd(_other) / magnitude);
 }
 
 template <typename T>
-T WP_Vec<T,2>::CrossProd(const WP_Vec<T, 2>& other) const
+T WP_Vec<T,2>::CrossProd(const WP_Vec<T, 2>& _other) const
 {
-	return this->x * other.y - this->y * other.x;
+	return this->x * _other.y - this->y * _other.x;
 }
 
 template <typename T>
@@ -203,19 +203,19 @@ WP_Vec<T, 2> WP_Vec<T, 2>::Normal() const
 }
 
 template <typename T>
-WP_Vec<T, 2>& WP_Vec<T, 2>::Rotate(double radians)
+WP_Vec<T, 2>& WP_Vec<T, 2>::Rotate(double _radians)
 	requires std::floating_point<T>
 {
-	*this = GetRotatedOrigin(radians);
+	*this = GetRotatedOrigin(_radians);
 	return *this;
 }
 
 template <typename T>
-WP_Vec<T, 2> WP_Vec<T, 2>::GetRotatedOrigin(double radians) const
+WP_Vec<T, 2> WP_Vec<T, 2>::GetRotatedOrigin(double _radians) const
 	requires std::floating_point<T>
 {
-	return WP_Vec<T, 2>(this->x * cos(radians) - this->y * sin(radians),
-		this->x * sin(radians) + this->y * cos(radians));
+	return WP_Vec<T, 2>(this->x * cos(_radians) - this->y * sin(_radians),
+		this->x * sin(_radians) + this->y * cos(_radians));
 }
 
 template <typename T>
@@ -225,17 +225,17 @@ double WP_Vec<T, 2>::Angle() const
 }
 
 template <typename T>
-double WP_Vec<T, 2>::Angle(const WP_Vec<T,2>& other) const
+double WP_Vec<T, 2>::Angle(const WP_Vec<T,2>& _other) const
 {
-	return atan2(CrossProd(other), this->DotProd(other));
+	return atan2(CrossProd(_other), this->DotProd(_other));
 }
 template <typename T>
-WP_Vec<T, 3> WP_Vec<T, 3>::CrossProd(const WP_Vec<T, 3>& other) const
+WP_Vec<T, 3> WP_Vec<T, 3>::CrossProd(const WP_Vec<T, 3>& _other) const
 {
 	WP_Vec<T, 3> result;
-	result. x = this->y * other. z - this->z * other.y;
-	result. y = this->z * other. x - this->x * other.z;
-	result. z = this->x * other. y - this->y * other.x;
+	result. x = this->y * _other. z - this->z * _other.y;
+	result. y = this->z * _other. x - this->x * _other.z;
+	result. z = this->x * _other. y - this->y * _other.x;
 	return result;
 }
 

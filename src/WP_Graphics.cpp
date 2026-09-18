@@ -5,7 +5,6 @@
 #include <WP_Logger.h>
 
 bool WP_Graphics::s_glewInit = false;
-WP_ShaderManager WP_Graphics::s_shaderManager;
 
 void WP_Graphics::InitialiseGLFW()
 {
@@ -34,15 +33,15 @@ void WP_Graphics::InitialiseGlew()
 
 }
 
-void WP_Graphics::LoadShader(const std::string& shaderName,
-	const std::string& vertexPath, const std::string& fragmentPath)
+void WP_Graphics::LoadShader(const std::string& _shaderName,
+	const std::string& _vertexPath, const std::string& _fragmentPath)
 {
-	s_shaderManager.LoadShader(shaderName, vertexPath, fragmentPath);
+	WP_ShaderManager::GetInstance().LoadShader(_shaderName, _vertexPath, _fragmentPath);
 }
 
-std::optional<WP_Shader> WP_Graphics::GetShader(const std::string& shaderName)
+std::optional<WP_Shader> WP_Graphics::GetShader(const std::string& _shaderName)
 {
-	return s_shaderManager.GetShader(shaderName);
+	return WP_ShaderManager::GetInstance().GetShader(_shaderName);
 }
 
 bool WP_Graphics::GetIsGlewInit()
@@ -52,6 +51,6 @@ bool WP_Graphics::GetIsGlewInit()
 
 void WP_Graphics::Cleanup()
 {
-	s_shaderManager.CleanUp();
+	WP_ShaderManager::GetInstance().CleanUp();
 	glfwTerminate();
 }
