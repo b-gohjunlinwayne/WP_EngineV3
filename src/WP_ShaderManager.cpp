@@ -103,10 +103,11 @@ void WP_ShaderManager::LoadShader(const
 	glUseProgram(newShaderProgram.p_shaderProgramID);
 
 	//add new shader program to dictionary
-	m_shaderDictionary.emplace(_shaderName, newShaderProgram);
+	m_shaderDictionary.emplace(_shaderName, m_shaderIDToShaderList.size());
+	m_shaderIDToShaderList.emplace_back(newShaderProgram);
 }
 
-std::optional<WP_Shader> WP_ShaderManager::GetShader(const std::string& _shaderName) const
+std::optional<WP_ShaderID> WP_ShaderManager::GetShaderID(const std::string& _shaderName) const
 {
 	auto searchResult = m_shaderDictionary.find(_shaderName);
 	if (searchResult != m_shaderDictionary.end())
@@ -116,10 +117,13 @@ std::optional<WP_Shader> WP_ShaderManager::GetShader(const std::string& _shaderN
 	return std::nullopt;
 }
 
+const WP_Shader& WP_ShaderManager::GetShader(WP_ShaderID _shaderProgramID) const
+{
+	return m_shaderIDToShaderList[_shaderProgramID];
+}
+
 void WP_ShaderManager::CleanUp()
 {
-	for (auto i : m_shaderDictionary)
-	{
-		glDeleteProgram(i.second.p_shaderProgramID);
-	}
+	m_shaderDictionary.clear();
+	m_shaderIDToShaderList.clear();
 }

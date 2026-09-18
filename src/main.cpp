@@ -29,13 +29,12 @@ WP_Vec3f Triangle[] =
 
 unsigned int VAO;
 unsigned int VBO;
-unsigned int vertexShader;
-unsigned int fragmentShader;
-unsigned int shaderProgram;
+
+WP_ShaderID currentShaderID;
 
 void UpdateLoop()
 {
-    glUseProgram(shaderProgram);
+	WP_Graphics::GetShader(currentShaderID).Use();
     glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
 }
@@ -62,12 +61,16 @@ int main()
             "Assets/Shader/DefaultShader/DefaultVert.vert", 
             "Assets/Shader/DefaultShader/DefaultFrag.frag");
 
-        std::optional<WP_Shader> shader = WP_Graphics::GetShader("defaultShader");
-        if (!shader.has_value())
+        std::optional<WP_ShaderID> shaderID = WP_Graphics::GetShaderID("defaultShader");
+        if (!shaderID.has_value())
         {
 			WP_Logger(WP_LogLevel::Error) << "Cannot find default shader";
+            return 0;
         }
-        shader.value().Use();
+        else
+        {
+            currentShaderID = shaderID.value();
+        }
 
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -83,8 +86,7 @@ int main()
         // 1. then set the vertex attributes pointers
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
-        // 2. use our shader program when we want to render an object
-        glUseProgram(shaderProgram);
+        WP_Graphics::GetShader(currentShaderID).Use();
 
         std::unique_ptr <WP_Window> subWindow = std::make_unique<WP_Window>(
             800, 600,
@@ -99,10 +101,6 @@ int main()
                 subWindow.reset();
             }
         }
-
-
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
 
         WP_LogManager::GetInstance().Stop();
     }

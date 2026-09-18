@@ -17,7 +17,9 @@ public:
 	//shader Manager
 	static void LoadShader(const std::string& _shaderName,
 		const std::string& _vertexPath, const std::string& _fragmentPath);
-	static std::optional<WP_Shader> GetShader(const std::string& _shaderName);
+
+	static std::optional<WP_ShaderID> GetShaderID(const std::string& _shaderName);
+	static const WP_Shader& GetShader(const WP_ShaderID _shaderID);
 
 	//Cleanup
 	static void Cleanup();

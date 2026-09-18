@@ -39,9 +39,13 @@ void WP_Graphics::LoadShader(const std::string& _shaderName,
 	WP_ShaderManager::GetInstance().LoadShader(_shaderName, _vertexPath, _fragmentPath);
 }
 
-std::optional<WP_Shader> WP_Graphics::GetShader(const std::string& _shaderName)
+std::optional<WP_ShaderID> WP_Graphics::GetShaderID(const std::string& _shaderName)
 {
-	return WP_ShaderManager::GetInstance().GetShader(_shaderName);
+	return WP_ShaderManager::GetInstance().GetShaderID(_shaderName);
+}
+const WP_Shader& WP_Graphics::GetShader(const WP_ShaderID _shaderID)
+{
+	return WP_ShaderManager::GetInstance().GetShader(_shaderID);
 }
 
 bool WP_Graphics::GetIsGlewInit()
