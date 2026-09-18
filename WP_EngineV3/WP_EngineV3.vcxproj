@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -129,13 +129,27 @@
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\WP_Graphics.cpp" />
+    <ClCompile Include="..\src\WP_Logger.cpp" />
+    <ClCompile Include="..\src\WP_Shader.cpp" />
+    <ClCompile Include="..\src\WP_ShaderManager.cpp" />
     <ClCompile Include="..\src\WP_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\WP_Graphics.h" />
+    <ClInclude Include="..\Include\WP_Logger.h" />
+    <ClInclude Include="..\Include\WP_Mat.h" />
+    <ClInclude Include="..\Include\WP_Mat.hpp" />
+    <ClInclude Include="..\Include\WP_Math.h" />
+    <ClInclude Include="..\Include\WP_Shader.h" />
+    <ClInclude Include="..\Include\WP_ShaderManager.h" />
+    <ClInclude Include="..\Include\WP_Validation.h" />
+    <ClInclude Include="..\Include\WP_Vec.h" />
+    <ClInclude Include="..\Include\WP_Vec.hpp" />
     <ClInclude Include="..\Include\WP_Window.h" />
-    <ClInclude Include="..\src\WP_Math.h" />
-    <ClInclude Include="..\src\WP_Vec.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Assets\Shader\DefaultShader\DefaultFrag.frag" />
+    <None Include="..\Assets\Shader\DefaultShader\DefaultVert.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -3,6 +3,10 @@
 #include <GLFW/glfw3.h>
 #include <WP_Window.h>
 #include <WP_Graphics.h>
+#include <WP_Math.h>
+#include <WP_Validation.h>
+#include <filesystem>
+#include <WP_Logger.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -15,28 +19,72 @@ void processInput(GLFWwindow* window)
         glfwSetWindowShouldClose(window, true);
 }
 
-int test = 1;
+
+WP_Vec3f Triangle[] =
+{
+    WP_Vec3f(-0.5,-0.5,0),
+    WP_Vec3f(0.5,-0.5,0),
+    WP_Vec3f(0,0.5f,0)
+};
+
+unsigned int VAO;
+unsigned int VBO;
+unsigned int vertexShader;
+unsigned int fragmentShader;
+unsigned int shaderProgram;
 
 void UpdateLoop()
 {
-    std::cout << "Update1" << std::endl;
+    glUseProgram(shaderProgram);
+    glBindVertexArray(VAO);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 void UpdateLoop2()
 {
-    std::cout << "Update2" << std::endl;
+
 }
 
 int main()
 {
-    WP_Graphics::InitialiseGLFW();
 
+    WP_Validation::RunAllValidations();
+    WP_Graphics::InitialiseGLFW();
     {
         std::unique_ptr<WP_Window> mainWindow = std::make_unique<WP_Window>(
             800, 600,
             "mainWindow",
             UpdateLoop
         );
+
+        WP_Logger() << std::filesystem::current_path() << '\n';
+        WP_Graphics::LoadShader("defaultShader", 
+            "Assets/Shader/DefaultShader/DefaultVert.vert", 
+            "Assets/Shader/DefaultShader/DefaultFrag.frag");
+
+        std::optional<WP_Shader> shader = WP_Graphics::GetShader("defaultShader");
+        if (!shader.has_value())
+        {
+			WP_Logger(WP_LogLevel::Error) << "Cannot find default shader";
+        }
+        shader.value().Use();
+
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER,
+            sizeof(Triangle), Triangle, GL_STATIC_DRAW);
+
+        glGenVertexArrays(1, &VAO);
+        glBindVertexArray(VAO);
+
+        // 0. copy our vertices array in a buffer for OpenGL to use
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle), Triangle, GL_STATIC_DRAW);
+        // 1. then set the vertex attributes pointers
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+        // 2. use our shader program when we want to render an object
+        glUseProgram(shaderProgram);
 
         std::unique_ptr <WP_Window> subWindow = std::make_unique<WP_Window>(
             800, 600,
@@ -51,60 +99,10 @@ int main()
                 subWindow.reset();
             }
         }
+
+
+        glDeleteShader(vertexShader);
+        glDeleteShader(fragmentShader);
     }
-
-
-    WP_Graphics::Cleanup();
-
-    /*
-    if (!glfwInit())
-    {
-        std::cerr << "GLFW init failed\n";
-        return 1;
-    }
-
-    GLFWwindow* window =
-        glfwCreateWindow(800, 600, "GLEW Test", nullptr, nullptr);
-
-    if (!window)
-    {
-        std::cerr << "Window creation failed\n";
-        glfwTerminate();
-        return 1;
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-    GLenum err = glewInit();
-
-    if (err != GLEW_OK)
-    {
-        std::cerr << "GLEW init failed: "
-            << glewGetErrorString(err) << '\n';
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        return 1;
-    }
-
-    std::cout << "GLEW initialized successfully!\n";
-    std::cout << "GLEW version: "
-        << glewGetString(GLEW_VERSION) << '\n';
-
-    glViewport(0, 0, 800, 600);
-    while (!glfwWindowShouldClose(window))
-    {
-        processInput(window);
-
-
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwDestroyWindow(window);
-    glfwTerminate();*/
     return 0;
 }

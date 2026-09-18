@@ -19,14 +19,15 @@ WP_Window::WP_Window(int width, int height,std::string name,
 	}
 
 
-	if (!WP_Graphics::GetIsGlewInit)
-	{
-		WP_Graphics::InitialiseGlew();
-	}
-
 	glfwMakeContextCurrent(m_window);
 	glfwSetWindowUserPointer(m_window, this);
 	glfwSetFramebufferSizeCallback(m_window, ResizeWindow);
+
+
+	if (!WP_Graphics::GetIsGlewInit())
+	{
+		WP_Graphics::InitialiseGlew();
+	}
 
 }
 
@@ -37,11 +38,12 @@ WP_Window::~WP_Window()
 
 bool WP_Window::RunWindow()
 {
-	m_process();
-	glfwSwapBuffers(m_window);
-	glfwPollEvents();
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
+
+	glfwMakeContextCurrent(m_window);
+	m_process();
+	glfwPollEvents();
 	glfwSwapBuffers(m_window);
 
 	if (glfwWindowShouldClose(m_window))

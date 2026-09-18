@@ -16,6 +16,12 @@
     <Filter Include="PropPages">
       <UniqueIdentifier>{ca472cd8-c516-40b5-8838-d610644e7afc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{3bf8f094-9f4b-4db7-b45e-4b1ca580d014}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Shader">
+      <UniqueIdentifier>{eb96b6cd-f2f5-45f9-b523-d263b0d211e5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp">
@@ -27,6 +33,15 @@
     <ClCompile Include="..\src\WP_Graphics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\WP_Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WP_ShaderManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WP_Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\WP_Window.h">
@@ -35,14 +50,41 @@
     <ClInclude Include="..\Include\WP_Graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\WP_Math.h">
+    <ClInclude Include="..\Include\WP_Vec.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\WP_Vec.h">
+    <ClInclude Include="..\Include\WP_Math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Vec.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Mat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Mat.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Validation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_ShaderManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\WP_Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(GLEWRoot)\build\vc2022\bin\$(Configuration)\$(GLEWDll)" />
+    <None Include="..\Assets\Shader\DefaultShader\DefaultVert.vert">
+      <Filter>Assets\Shader</Filter>
+    </None>
+    <None Include="..\Assets\Shader\DefaultShader\DefaultFrag.frag">
+      <Filter>Assets\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
