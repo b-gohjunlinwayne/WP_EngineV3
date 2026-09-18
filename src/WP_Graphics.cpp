@@ -1,6 +1,4 @@
 #include <WP_Graphics.h>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <iostream>
 #include <WP_Logger.h>
 
@@ -48,6 +46,20 @@ const WP_Shader& WP_Graphics::GetShader(const WP_ShaderID _shaderID)
 	return WP_ShaderManager::GetInstance().GetShader(_shaderID);
 }
 
+void WP_Graphics::LoadMesh()
+{
+	WP_MeshManager::GetInstance().LoadMesh();
+}
+
+std::optional<WP_MeshID> WP_Graphics::GetMeshID(const std::string& _meshName)
+{
+	return WP_MeshManager::GetInstance().GetMeshID(_meshName);
+}
+const WP_Mesh& WP_Graphics::GetMesh(const WP_MeshID _meshID)
+{
+	return WP_MeshManager::GetInstance().GetMesh(_meshID);
+}
+
 bool WP_Graphics::GetIsGlewInit()
 {
 	return s_glewInit;
@@ -56,5 +68,6 @@ bool WP_Graphics::GetIsGlewInit()
 void WP_Graphics::Cleanup()
 {
 	WP_ShaderManager::GetInstance().CleanUp();
+	WP_MeshManager::GetInstance().CleanUp();
 	glfwTerminate();
 }

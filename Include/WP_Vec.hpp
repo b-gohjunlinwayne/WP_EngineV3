@@ -1,6 +1,6 @@
 #pragma once
 #include <WP_Vec.h>
-#include <math.h>
+#include <cmath>
 #include <array>
 
 template <typename Derived, typename T, size_t Elements>

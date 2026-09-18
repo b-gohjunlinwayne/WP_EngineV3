@@ -4,13 +4,14 @@
 #include <iostream>
 
 WP_Window::WP_Window(int width, int height,std::string name,
-	WindowProcessFunction process):
+	WindowProcessFunction process, const WP_Window* windowToShareContextWith):
 	m_currentWidth(width),
 	m_currentHeight(height),
 	m_process(process)
 {
 	m_window = glfwCreateWindow(m_currentWidth, m_currentHeight, 
-		name.c_str(), nullptr, nullptr);
+		name.c_str(), nullptr,
+		windowToShareContextWith ? windowToShareContextWith->m_window : nullptr);
 	glViewport(0, 0, m_currentWidth, m_currentHeight);
 
 	if (!m_window)

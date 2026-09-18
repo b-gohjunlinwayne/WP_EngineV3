@@ -132,16 +132,19 @@
     <ClCompile Include="..\src\WP_Logger.cpp" />
     <ClCompile Include="..\src\WP_Shader.cpp" />
     <ClCompile Include="..\src\WP_ShaderManager.cpp" />
+    <ClCompile Include="..\src\WP_Mesh.cpp" />
     <ClCompile Include="..\src\WP_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\WP_Graphics.h" />
+    <ClInclude Include="..\Include\WP_GraphicsDefine.h" />
     <ClInclude Include="..\Include\WP_Logger.h" />
     <ClInclude Include="..\Include\WP_Mat.h" />
     <ClInclude Include="..\Include\WP_Mat.hpp" />
     <ClInclude Include="..\Include\WP_Math.h" />
     <ClInclude Include="..\Include\WP_Shader.h" />
     <ClInclude Include="..\Include\WP_ShaderManager.h" />
+    <ClInclude Include="..\Include\WP_Mesh.h" />
     <ClInclude Include="..\Include\WP_Validation.h" />
     <ClInclude Include="..\Include\WP_Vec.h" />
     <ClInclude Include="..\Include\WP_Vec.hpp" />

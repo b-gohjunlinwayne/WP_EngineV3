@@ -1,7 +1,8 @@
 #pragma once
-#include <GLFW/glfw3.h>
+#include <WP_GraphicsDefine.h>
 #include <memory>
 #include <string>
+#include <optional>
 
 class WP_Window
 {
@@ -19,7 +20,7 @@ private:
 public:
 
 	WP_Window(int width, int height,std::string name,
-		WindowProcessFunction process);
+		WindowProcessFunction process, const WP_Window* windowToShareContextWith);
 	~WP_Window();
 
 	bool RunWindow();

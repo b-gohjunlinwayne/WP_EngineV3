@@ -1,6 +1,4 @@
 #include <iostream>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include <WP_Window.h>
 #include <WP_Graphics.h>
 #include <WP_Math.h>
@@ -27,21 +25,22 @@ WP_Vec3f Triangle[] =
     WP_Vec3f(0,0.5f,0)
 };
 
+WP_ShaderID currentShaderID;
+WP_MeshID currentMeshID;
+
 unsigned int VAO;
 unsigned int VBO;
 
-WP_ShaderID currentShaderID;
 
 void UpdateLoop()
 {
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
 	WP_Graphics::GetShader(currentShaderID).Use();
-    glBindVertexArray(VAO);
+
+    glBindVertexArray(WP_Graphics::GetMesh(currentMeshID).p_VAO);
     glDrawArrays(GL_TRIANGLES, 0, 3);
-}
-
-void UpdateLoop2()
-{
-
 }
 
 int main()
@@ -53,7 +52,8 @@ int main()
         std::unique_ptr<WP_Window> mainWindow = std::make_unique<WP_Window>(
             800, 600,
             "mainWindow",
-            UpdateLoop
+            UpdateLoop,
+            nullptr
         );
 
         WP_Logger() << std::filesystem::current_path() << '\n';
@@ -72,34 +72,37 @@ int main()
             currentShaderID = shaderID.value();
         }
 
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER,
-            sizeof(Triangle), Triangle, GL_STATIC_DRAW);
+        WP_Graphics::LoadMesh();
 
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
+		std::optional<WP_MeshID> meshID = WP_Graphics::GetMeshID("testMesh");
+        if (!meshID.has_value())
+		{
+            WP_Logger(WP_LogLevel::Error) << "Cannot find test mesh";
+            return 0;
+        }
+        else
+        {
+            currentMeshID = meshID.value();
+		}
 
-        // 0. copy our vertices array in a buffer for OpenGL to use
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(Triangle), Triangle, GL_STATIC_DRAW);
-        // 1. then set the vertex attributes pointers
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+
         WP_Graphics::GetShader(currentShaderID).Use();
 
+        /*
         std::unique_ptr <WP_Window> subWindow = std::make_unique<WP_Window>(
             800, 600,
             "subWindow",
-            UpdateLoop2
-        );
+            UpdateLoop2,
+            mainWindow.get()
+        );*/
 
         while (mainWindow->RunWindow())
         {
+            /*
             if (subWindow && !subWindow->RunWindow())
             {
                 subWindow.reset();
-            }
+            }*/
         }
 
         WP_LogManager::GetInstance().Stop();
